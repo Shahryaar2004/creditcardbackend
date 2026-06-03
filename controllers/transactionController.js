@@ -122,10 +122,9 @@ export const checkTransaction = async (req, res) => {
     
     // Count how many transaction records this specific user has generated in the last 60 seconds
     const recentRequestCount = await Transaction.countDocuments({
-      userId: req.user.id,
-      createdAt: { $gte: oneMinuteAgo } // Assumes your schema utilizes timestamps: true
-    });
-
+  userId: req.user.id,
+  timestamp: { $gte: oneMinuteAgo } // Uses the pre-existing field that all old data has!
+});
     if (recentRequestCount >= 5) {
       console.warn(`Rate Limit Triggered for User: ${req.user.id} (${recentRequestCount + 1}/5 requests)`);
       return res.status(429).json({
