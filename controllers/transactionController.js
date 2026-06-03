@@ -111,12 +111,11 @@ export const checkTransaction = async (req, res) => {
     `;
 
     // Call Google Gemini 2.5 Flash
-    const geminiResponse = await axios.post(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
-      { contents: [{ parts: [{ text: promptText }] }] },
-      { headers: { 'Content-Type': 'application/json' } }
-    );
-
+   const geminiResponse = await axios.post(
+  `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+  { contents: [{ parts: [{ text: promptText }] }] },
+  { headers: { 'Content-Type': 'application/json' } }
+);
     // Safely parse the AI output
     const rawContent = geminiResponse.data.candidates[0].content.parts[0].text.trim();
     const cleanJsonString = rawContent.replace(/```json|```/g, "").trim();
