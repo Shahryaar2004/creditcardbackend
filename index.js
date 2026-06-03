@@ -16,10 +16,12 @@ import { getStats, manageUserBlock } from './controllers/dashboardController.js'
 const app = express();
 
 // Middleware Integration & Security Channels
-const allowedOrigins = [
-  'http://localhost:5173',                           // Local Vite development server
-  'https://creditcardfraudfront.vercel.app'          // Production deployment portal
-];
+// ✅ WIDE OPEN CORS CHANNEL: Allows any origin (including Vercel, localhost, or mobile) to communicate with your API
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
+
 app.use(express.json());
 
 // Establish Database connection pipeline
