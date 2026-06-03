@@ -16,6 +16,10 @@ const transactionSchema = new mongoose.Schema({
   status: { type: String, enum: ['Legitimate', 'Suspicious', 'Fraudulent'], required: true },
   flags: [{ type: String }],
   timestamp: { type: Date, default: Date.now }
+}, {
+  // ✅ FIX 1: This automatically inserts 'createdAt' and 'updatedAt' fields into your documents.
+  // This enables our 5 requests per minute rolling rate limiter to function perfectly!
+  timestamps: true 
 });
 
 export default mongoose.model('Transaction', transactionSchema);
